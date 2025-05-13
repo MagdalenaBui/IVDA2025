@@ -44,7 +44,7 @@ def build_rangeslider(name: str, min: int, max: int) -> InputElement:
 			min=min,
 			max=max,
 			value=[min,max],
-			allowCross=False,
+			allowCross=False, 
 			updatemode='drag',
 			tooltip={"placement": "bottom", "always_visible": True}
 		)

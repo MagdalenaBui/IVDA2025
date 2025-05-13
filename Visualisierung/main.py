@@ -10,9 +10,11 @@ def main() -> None:
 
 	visualizations = [
 		Distribution(app, dataframe, ["Age", "Wage(in Euro)", "Overall"], show_boxplot=True),
-		Distribution(app, dataframe, ["Nationality", "Club Name"], show_boxplot= False)
+		Distribution(app, dataframe, ["Nationality", "Club Name"], show_boxplot= False),
+		Distribution(app, dataframe, ["Age", "Overall", "Wage(in Euro)"], show_boxplot= False)
 	]
-#What
+
+	# Layout ist eine Liste von Komponenten, die in der App angezeigt werden sollen
 	app.layout = [
 		component for visualization in visualizations for component in visualization.html()
 	]
