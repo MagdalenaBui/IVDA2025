@@ -23,12 +23,11 @@ class Comparison(Visualization):
         self.filter_elements = [
             build_radio_items("Attribut an der Y-Achse", [("Overall", "Overall"), ("Wage(in Euro)", "Wage(in Euro)")],
                               "Wage(in Euro)"),
-            build_dropdown("nach Club filtern", dataframe["Club Name"].unique().tolist(), multi=True),
-            build_dropdown("nach Nationality filtern", dataframe["Nationality"].unique().tolist(),multi=True),
+            build_dropdown("nach Club filtern", dataframe["Club Name"].unique().tolist(), multi=True, clearable=True),
+            build_dropdown("nach Nationality filtern", dataframe["Nationality"].unique().tolist(),multi=True, clearable=True),
             build_rangeslider("nach Age filtern", int(dataframe["Age"].min()), int(dataframe["Age"].max())),
             build_rangeslider("nach Wage (in Euro) filtern", int(dataframe["Wage(in Euro)"].min()), int(dataframe["Wage(in Euro)"].max())),
             build_rangeslider("nach Overall filtern", int(dataframe["Overall"].min()), int(dataframe["Overall"].max()))
-
         ]
 
 
