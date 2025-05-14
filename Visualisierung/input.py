@@ -12,7 +12,7 @@ class InputElement(TypedDict):
 	input: Input
 
 #Bau der Dropdown Komponente, die Multi-Select sein kann, für kategoriale Attribute
-def build_dropdown(name: str, options: list[T], default: T | None = None, multi=False) -> InputElement:
+def build_dropdown(name: str, options: list[T], default: T | None = None, multi=False, clearable=False) -> InputElement:
 	id = generate_id("dropdown")
 
 	element = Div([
@@ -23,6 +23,7 @@ def build_dropdown(name: str, options: list[T], default: T | None = None, multi=
 				# Alphabetische Sortierung der Optionen
 				options=sorted(options, key=lambda value : str(value)),
 				multi=multi,
+				clearable=clearable,
 				style={
 					"max-width": "300px",
 					"margin-bottom": "10px"
