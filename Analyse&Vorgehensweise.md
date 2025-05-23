@@ -1,11 +1,8 @@
 # Analyse Datensatz 
 
 ## 1. Einlesen und erkennen von Datumswert 
-Datums Attribut fehlt -> versteckt in anderen Daten, min und max Werte bestimmen um Spalte mit Ausreißern zu erkennen -> da automatisiert Datenveränderung stattgefunden hat wird sich hier ein Muster zeigen. Andere mögliche Ideen: korrekte Formatierung (einige Werte mit . und , getrennt -> Formatierung in nachfolgenden Zellen also auch betroffen und fehlerhaft.) 
-
-- , ist Separator/Delimiter und . wird in der Value Trennung genutzt bzw. ist das der Standard Float Trennzeichen -> Werte mit einer Schleife durchgehen und korrigieren
-- ., werden random in den Werten versteckt vertauscht, aber wenigstens 1x bis zu 3x pro Zeile (auf den ersten Blick) -> Datumswert kann gebildet werden (YAY!)
-- Datentypen Vergleich, ist Spalte float oder int und würde nach der Reinigung dann der Wert noch passen -> automatisches erkennen 
+- Es sind zu viele Punkte vorhanden --> ., vor dem Komma Separator
+- diese sind über eine Lambda Funktion entfernt
 
 ## 2. Lineare Regression von zwei Attributen 
 
