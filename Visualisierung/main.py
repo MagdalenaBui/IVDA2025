@@ -1,6 +1,7 @@
 from dash import Dash
 from data import load, remove_dots_before_commas
-from visualizations.linear_regression_np import LinearRegressionViz
+from visualizations.linear_regression_np import LinearRegressionVis
+from visualizations.cluster import ClusterVis
 import numpy as np
 
 def main() -> None:
@@ -12,7 +13,8 @@ def main() -> None:
     dash = Dash()
 
     visualizations = [
-        LinearRegressionViz(data, column_names, dash),
+        LinearRegressionVis(data, column_names, dash),
+        ClusterVis(data, column_names, dash)
     ]
 
     dash.layout = [
