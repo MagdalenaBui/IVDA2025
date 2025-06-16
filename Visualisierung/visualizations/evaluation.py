@@ -7,7 +7,7 @@ from plotly.graph_objs import Bar, Figure
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics._plot.confusion_matrix import ConfusionMatrixDisplay
 from sklearn.tree import DecisionTreeClassifier, plot_tree
-from visualization import Visualization
+from visualizations.visualization import Visualization
 from base64 import b64encode
 from numpy import argmax, mean
 
@@ -31,7 +31,7 @@ class Evaluation(Visualization):
 
         scores = DataFrame([
             {
-                #Für jeden Key in score_names + ["name"] wird, wenn er in score_names ist ein Mittelwert berechnet, sonst wird ein String erstellt
+                #Für jeden Key in score_names + ["name"] wird, wenn er in score_names ist ein Mittelwert berechnet, sonst wird ein "Modellname (Split-Methode)" String erstellt
                 key: mean(result[key])
                     if key in score_names
                     else f"{name} ({str(result['split_method'].value)})"
@@ -46,7 +46,7 @@ class Evaluation(Visualization):
             Bar(
                 y=scores[key],
                 x=scores["name"],
-                name=key[5:]
+                name=key[5:] #"test_" vom Namen entfernen
             )
             for key in scores
             if key != "split_method" and key != "name"
@@ -67,7 +67,7 @@ class Evaluation(Visualization):
             for name, results in model_results:
                     images = []
 
-                # Für jedes Trainingsergebnis wird der Durchschnitt der Confusion-Matrix berechnet
+                # Für jedes Trainingsergebnis wird durchschnittliche Confusion-Matrix berechnet
                     for result in results:
                         cm = mean(
                             [
@@ -84,8 +84,8 @@ class Evaluation(Visualization):
                         cm.plot(values_format=".1f")
 
                         #Plot wird als Bild im Speicher gespeichert
-                        bio = BytesIO()
-                        plt.savefig(bio, format="png")
+                        bio = BytesIO() #leeren Speicherpuffer erstellen
+                        plt.savefig(bio, format="png") #Matplotlib-Figur als PNG speichern
                         bio.seek(0) # Cursor Zurücksetzten
                         plt.close() # Matplotlib Figur wieder schließen
 
@@ -127,7 +127,7 @@ class Evaluation(Visualization):
 
 
     def generate_tree_chart(self, model_results, X, Y):
-        # Ergebnisse des DecisionTreeCLassifiers finden
+        # Ergebnisse des DecisionTreeClassifiers finden
         results = next(
             result[1] for result in model_results if isinstance(result[1][0]["estimator"][0], DecisionTreeClassifier))
 
