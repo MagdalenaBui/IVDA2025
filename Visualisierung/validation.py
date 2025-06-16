@@ -8,7 +8,7 @@ class SplitMethod(Enum):
 
 #Kreuzvalidierung bekommt das Modell, Merkmalsvariablen, Zielvariablen, Validierungsstrategie, Validierungsmethode) und berechnet Accuracy, F1, Precision, Recall
 def cross_validation(estimator, X, Y, cv, method):
-    result: cross_validate(
+    result= cross_validate(
         estimator,
         X,
         Y,
