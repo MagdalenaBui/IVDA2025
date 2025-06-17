@@ -36,14 +36,15 @@ def data_cleaning(filename, output_filename):
 		.str.strip()                            # Leerraum am Rand entfernen
 	)
 
-	# Cabin-Spalte: Mehrfach-Kabinen in Tupel umwandeln (ohne 'NA')
-	df['Cabin_list'] = df['Cabin'].apply(lambda x: tuple(x.split()) if x != 'NA' else tuple())
+	# Cabin-Spalte: Mehrfache Leerzeichen entfernen und durch Komma trennen und in String umwandeln
+	df['Cabin'] = (
+		df['Cabin']
+		.str.strip()                            # Leerraum entfernen
+		.str.replace(r'\s+', ',', regex=True)   # Mehrfache Leerzeichen durch Komma trennen
+	)
 
 	# Duplikate entfernen
 	df.drop_duplicates(inplace=True)
 
 	# Bereinigtes DataFrame speichern
 	df.to_csv(output_filename, index=False)
-
-	# Erste Zeilen zur Kontrolle ausgeben
-	print(df.head())
