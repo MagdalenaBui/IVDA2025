@@ -2,7 +2,7 @@
 
 - Dezimaltrennzeichen in 'Fare' vereinheitlichen und in numerisch umwandeln -> Kommas durch Punkte ersetzen
 
-- Fehlende Einträge → NaN
+- Fehlende Einträge bei Age, Cabin, Embarked → NaN
   
 - Ticket-Strings bereinigen
   - Punkte und Schrägstriche entfernen
