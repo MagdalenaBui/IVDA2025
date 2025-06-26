@@ -35,7 +35,14 @@ class MLPParams(TypedDict):
 class MLPResult(Result):
 	params: MLPParams
 
-# Kreuzvalidierung mit Datennormalisierung (Standardscaler) und Berechnung der verschiedenen Metriken, wobei nach der Accuracy das beste Modell gewählt wird
+class SLPParams(TypedDict):
+	hidden_layer_sizes: Tuple[int]
+	activation: str
+
+class SLPResult(Result):
+	params: MLPParams
+
+# Kreuzvalidierung zum AUfteilen der Daten in Test- und Trainingsdaten mit Datennormalisierung (Standardscaler) und Berechnung der verschiedenen Metriken, wobei nach der Accuracy das beste Modell gewählt wird
 def cv(estimator: type[BaseEstimator], configs, X: DataFrame, y: Series) -> list[Result]:
 	results = []
 
@@ -49,10 +56,11 @@ def cv(estimator: type[BaseEstimator], configs, X: DataFrame, y: Series) -> list
 			),
 			X,
 			y,
+			#cv=10,
 			return_estimator=True,
 			return_indices=True,
 			scoring=["accuracy", "f1", "precision", "recall"],
-			n_jobs=-1
+			n_jobs=-1 #parallele Verarbeitung auf allen Verfügbaren CPU-Kernen, damit die Rechenzeit nicht zu hoch wird
 		)
 
 		best_index = argmax(result["test_accuracy"])
@@ -109,3 +117,15 @@ def mlp(X: DataFrame, y: Series) -> list[MLPResult]:
 	)
 
 	return cast(list[MLPResult], result)
+
+def slp(X: DataFrame, y: Series) -> list[SLPResult]:
+	result = cv(
+		MLPClassifier,
+		[
+			{ "hidden_layer_sizes": (4,), "activation": "identity", "max_iter": 500 },
+			{ "hidden_layer_sizes": (6,), "activation": "tanh", "max_iter": 500 }
+		],
+		X,
+		y
+	)
+	return cast(list[SLPResult], result)

@@ -2,7 +2,8 @@ from typing import cast
 from dash import Dash
 from pandas import DataFrame, Series
 from data import load_data
-from models import mlp, svm
+from models import mlp, svm, slp
+from src.visualizations.slp import SLPVisualization
 from visualizations.mlp import MLPVisualization
 from visualizations.svm import SVMVisualization
 
@@ -16,13 +17,15 @@ def main() -> None:
 
 	#Trainieren der verschiedenen Modelle
 	svm_results = svm(X, y)
+	slp_results = slp(X, y)
 	mlp_results = mlp(X, y)
 
 	app = Dash()
 
 	app.layout = [
 		SVMVisualization(app, svm_results, X, y).html(),
-		MLPVisualization(app, mlp_results, X, y).html()
+		MLPVisualization(app, mlp_results, X, y).html(),
+		SLPVisualization(app, slp_results, X, y).html()
 	]
 
 	app.run(debug=False)
