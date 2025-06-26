@@ -64,8 +64,8 @@ class SVMVisualization:
 			return [
 				generate_confusion_matrix(a_estimator, a_X_test, a_y_test),
 				generate_confusion_matrix(b_estimator, b_X_test, b_y_test),
-				self.generate_decision_boundary_plot(a_estimator, a_X_test, a_y_test),
-				self.generate_decision_boundary_plot(b_estimator, b_X_test, b_y_test)
+				self.generate_decision_boundary_plot(a_estimator, a_X_test, a_y_test, a),
+				self.generate_decision_boundary_plot(b_estimator, b_X_test, b_y_test, b)
 			]
 
 		self.container = Div(
@@ -121,7 +121,9 @@ class SVMVisualization:
 		)
 
 	#Entscheidungsgrenzen durch ein Streudiagramm visualisieren mithilfe von Dimensionsreduktion (PCA)
-	def generate_decision_boundary_plot(self, estimator: Pipeline, X: DataFrame, y: Series):
+	def generate_decision_boundary_plot(self, estimator: Pipeline, X: DataFrame, y: Series, result: SVMResult):
+
+
 		pca = PCA(n_components=2)
 
 		X_reduced = pca.fit_transform(estimator[0].transform(X))
@@ -154,6 +156,16 @@ class SVMVisualization:
 			edgecolors="k",
 			cmap="viridis_r"
 		)
+		# Berechne den erklärten Varianzanteil für jede Komponente
+		explained_variance_ratio = pca.explained_variance_ratio_
+
+		title = f"Decision Boundary for {self.result_to_string(result)}"
+
+		plt.title(title)
+
+		# Beschrifte die Achsen mit Komponente und Varianzanteil
+		plt.xlabel(f'PC1 {explained_variance_ratio[0]:.2%} der Varianz')
+		plt.ylabel(f'PC2 {explained_variance_ratio[1]:.2%} der Varianz')
 
 		plt.legend(handles=scatter.legend_elements()[0], labels=[0, 1])
 
