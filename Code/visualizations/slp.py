@@ -26,11 +26,11 @@ class SLPVisualization:
         self.container = Div(
             [
                 H1("SLP"),
-                H3("scores"),
+                H3("Scores"),
                 Graph(
                     figure=generate_score_chart(results, self.result_to_string, "params")
                 ),
-                H3("compare"),
+                H3("Vergleich"),
                 Div(
                     [self.generate_visualizations(a, X, y), self.generate_visualizations(b, X, y)],
                     style={"display": "flex"}
@@ -202,7 +202,7 @@ class SLPVisualization:
         return figure
 
     def result_to_string(self, result: SLPResult):
-        return f"hidden layer sizes: {result['params']['hidden_layer_sizes']}, activation: {result['params']['activation']}"
+        return f"hidden layer sizes: {result['params']['hidden_layer_sizes']}"
 
     def html(self):
         return self.container
