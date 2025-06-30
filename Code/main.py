@@ -22,10 +22,13 @@ def main() -> None:
 
 	app = Dash()
 
+
+
 	app.layout = [
 		SVMVisualization(app, svm_results, X, y).html(),
+		SLPVisualization(app, slp_results, X, y).html(),
 		MLPVisualization(app, mlp_results, X, y).html(),
-		SLPVisualization(app, slp_results, X, y).html()
+
 	]
 
 	app.run(debug=False)

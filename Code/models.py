@@ -49,6 +49,7 @@ def cv(estimator: type[BaseEstimator], configs, X: DataFrame, y: Series) -> list
 	for config in configs:
 		print(config)
 
+
 		result = cross_validate(
 			make_pipeline(
 				StandardScaler(),
@@ -56,7 +57,7 @@ def cv(estimator: type[BaseEstimator], configs, X: DataFrame, y: Series) -> list
 			),
 			X,
 			y,
-			#cv=10,
+			cv=10,
 			return_estimator=True,
 			return_indices=True,
 			scoring=["accuracy", "f1", "precision", "recall"],
@@ -80,6 +81,7 @@ def cv(estimator: type[BaseEstimator], configs, X: DataFrame, y: Series) -> list
 		)
 
 	return results
+
 #SVM Klassifikation mit verschiedenen Hyperparametern (Kernel, C-Werte, Gamma-Werte)
 def svm(X: DataFrame, y: Series) -> list[SVMResult]:
 	C = [0.01, 0.1, 1, 10]
@@ -104,13 +106,13 @@ def svm(X: DataFrame, y: Series) -> list[SVMResult]:
 
 	return cast(list[SVMResult], result)
 
-#MLP KLassifikation mit zwei Netzwerk-Konfigurationen: Linearer und Tanh-Aktivierung
+#MLP KLassifikation mit zwei Netzwerk-Konfigurationen
 def mlp(X: DataFrame, y: Series) -> list[MLPResult]:
 	result = cv(
 		MLPClassifier,
 		[
-			{ "hidden_layer_sizes": (2, 2, 2), "activation": "identity", "max_iter": 500 },
-			{ "hidden_layer_sizes": (10, 10, 6), "activation": "tanh", "max_iter": 500 }
+			{ "hidden_layer_sizes": (10, 10, 10), "max_iter": 2000},
+			{ "hidden_layer_sizes": (14, 14, 14), "max_iter": 2000}
 		],
 		X,
 		y
@@ -122,8 +124,8 @@ def slp(X: DataFrame, y: Series) -> list[SLPResult]:
 	result = cv(
 		MLPClassifier,
 		[
-			{ "hidden_layer_sizes": (4,), "activation": "identity", "max_iter": 500 },
-			{ "hidden_layer_sizes": (6,), "activation": "tanh", "max_iter": 500 }
+			{ "hidden_layer_sizes": (4,),"max_iter": 2000},
+			{"hidden_layer_sizes": (8,),"max_iter": 2000}
 		],
 		X,
 		y
